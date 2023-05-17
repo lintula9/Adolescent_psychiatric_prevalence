@@ -36,9 +36,10 @@ superiority_plots <- function(PQBcutoffs, BDI) {
                       round(sapply(superiorities, FUN = function(x) x$estimate)[which.max(sapply(superiorities, FUN = function(x) x$estimate))],2)))
 }
 pdf("Superiority_MDD&Mild.pdf", fonts = "serif", compress = F, pointsize = 8)
+
+# Plots
 superiority_plots(PQBcutoffs,df$BDIMDD)
 superiority_plots(PQBcutoffs,df$BDImild)
 dev.off()
 
 
-# BDI MDD ----------
