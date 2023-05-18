@@ -25,21 +25,23 @@ superiority_plots <- function(PQBcutoffs, BDI) {
   plot(sapply(superioritiesFemale, FUN = function(x) x$estimate), 
        x = PQBcutoffs, type = "b", ylim = c( .5, 1 ), col = "red", ylab = "")
   lines(y = sapply(superioritiesMale, FUN = function(x) x$estimate), 
-        x = PQBcutoffs, type = "b", col = "blue")
+        x = PQBcutoffs, type = "b", col = "blue", lwd = 1.5)
   lines(y = sapply(superiorities, FUN = function(x) x$estimate), 
-        x = PQBcutoffs, type = "b", col = "gray")
+        x = PQBcutoffs, type = "b", col = "gray", lwd = 1.5)
   title(ylab = "Superiority: P( X < Y ) + .5 * P( X = Y )")
-  text(x = which.max(sapply(superiorities, FUN = function(x) x$estimate)),
-       y = .75, 
-       labels = paste(which.max(sapply(superiorities, FUN = function(x) x$estimate)),
-                      ":",
-                      round(sapply(superiorities, FUN = function(x) x$estimate)[which.max(sapply(superiorities, FUN = function(x) x$estimate))],2)))
-}
-pdf("Superiority_MDD&Mild.pdf", fonts = "serif", compress = F, pointsize = 8)
+  legend(x = 35, y = .9, 
+         legend = c("Overall", "Male", "Female"), 
+         col = c("black","blue","red"), 
+         lty = 1, pch = 1, 
+         box.col = "white") 
+  }
 
+
+
+pdf("Superiority_MDD&Mild.pdf", fonts = "serif", compress = F, pointsize = 8)
 # Plots
-superiority_plots(PQBcutoffs,df$BDIMDD)
-superiority_plots(PQBcutoffs,df$BDImild)
+superiority_plots(PQBcutoffs,df$BDIMDD) ;  title(main = "Superiority plot for major depression")
+superiority_plots(PQBcutoffs,df$BDImild) ;  title(main = "Superiority plot for mild depression")
 dev.off()
 
 

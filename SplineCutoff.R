@@ -1,6 +1,6 @@
 # Spline 'cutoff'
 
-bends <- 2:40
+bends <- 1:40
 
 # For all
 modelList <- list()
@@ -12,20 +12,10 @@ for ( i in bends ) { # Fit models, make list of models
                          degree = 1, 
                          knots = i)) 
 
-  modelList[[ i - 1 ]] <- model
+  modelList[[ i  ]] <- model
   }
 
-
-for (i in c(10,14,16,18,20,22,24,26,28,30)) { # Some plots
-  plot(y = df$BDIsum, x = df$PQBsum_cust)
-  splinePreds <- predict(modelList[[ i ]], 
-                         newdata = data.frame(PQBsum_cust = 0:80),
-                         col = i-1)
-  lines(x = 0:80, y = splinePreds)
-  readline("Enter for next plot.")
-}
-
-which.max(sapply(modelList, AIC))
+bestOverall <- modelList[[which.min(sapply(modelList, AIC))]] # Choose by AIC
 
 # Males
 
@@ -38,10 +28,10 @@ for ( i in bends ) { # Fit models, make list of models
                                     degree = 1, 
                                     knots = i)) 
   
-  modelListMale[[ i - 1 ]] <- model
+  modelListMale[[ i ]] <- model
 }
-sapply(modelListMale, AIC)
-which.min(sapply(modelListMale, AIC))
+
+bestMale <- modelListMale[[which.min(sapply(modelListMale, AIC))]] # Choose by AIC
 
 
 # Females
@@ -54,7 +44,30 @@ for ( i in bends ) { # Fit models, make list of models
                                     degree = 1, 
                                     knots = i)) 
   
-  modelListFemale[[ i - 1 ]] <- model
+  modelListFemale[[ i ]] <- model
 }
-sapply(modelListFemale, AIC)
-which.min(sapply(modelListFemale, AIC))
+
+bestFemale <- modelListFemale[[which.min(sapply(modelListFemale, AIC))]] # Choose by AIC
+
+# Plot ----
+
+SplinePlot <- function() {
+plot(y = df$BDIsum, x = df$PQBsum_cust, 
+     main = "Spline cutoffs",
+     ylab = "BDI sum",
+     xlab = "PQB sum (no Grandiosity)")
+pred <- cbind(predict(bestOverall, newdata = data.frame(PQBsum_cust = 0:90)),
+              predict(bestMale, newdata = data.frame(PQBsum_cust = 0:90)),
+              predict(bestFemale, newdata = data.frame(PQBsum_cust = 0:90)))
+
+sapply(1:3, function (x) lines(y = pred[,x], 
+                               x = 0:90, 
+                               lty = x, lwd = 1.5))
+legend(x = 80, y = 10, 
+       legend = c("Overall", "Male", "Female"), 
+       lty = 1:3, box.col = "white") }
+
+
+
+
+
