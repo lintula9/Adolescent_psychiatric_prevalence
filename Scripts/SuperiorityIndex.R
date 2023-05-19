@@ -1,7 +1,7 @@
 # Probability of superiority
 
 # BDI Mild -------
-PQBcutoffs <- 1:40
+PQBcutoffs <- 0:70
 
 superiority_plots <- function(PQBcutoffs, BDI) {
   # Both sexes.
@@ -27,9 +27,9 @@ superiority_plots <- function(PQBcutoffs, BDI) {
   lines(y = sapply(superioritiesMale, FUN = function(x) x$estimate), 
         x = PQBcutoffs, type = "b", col = "blue", lwd = 1.5)
   lines(y = sapply(superiorities, FUN = function(x) x$estimate), 
-        x = PQBcutoffs, type = "b", col = "gray", lwd = 1.5)
+        x = PQBcutoffs, type = "b", col = "black", lwd = 1.5)
   title(ylab = "Superiority: P( X < Y ) + .5 * P( X = Y )")
-  legend(x = 35, y = .9, 
+  legend(x = 50, y = .9, 
          legend = c("Overall", "Male", "Female"), 
          col = c("black","blue","red"), 
          lty = 1, pch = 1, 

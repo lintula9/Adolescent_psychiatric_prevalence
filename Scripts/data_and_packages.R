@@ -15,9 +15,9 @@ data_path <- "C:/Users/lintu/OneDrive/Desktop/PTO tutkimus/PLE prevalence among 
 df <- read_sav(data_path, encoding = "UTF-8")
 
 # Misc options
-grayscale_palette <- c("#000000","#888888", "#444444", "#222222",  "#666666",  "#AAAAAA", "#CCCCCC", "#EEEEEE")
+color_palette <- c("blue","red", "violet", "#222222",  "#666666",  "#AAAAAA", "#CCCCCC", "#EEEEEE")
 theme_set(theme_bw())
-options(ggplot2.discrete.colour= grayscale_palette)
+options(ggplot2.discrete.colour= color_palette)
 
 
 # Data modifications -------------

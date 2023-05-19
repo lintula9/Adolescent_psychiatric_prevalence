@@ -1,6 +1,6 @@
 # Spline 'cutoff'
 
-bends <- 1:40
+bends <- 1:70
 
 # For all
 modelList <- list()
@@ -62,12 +62,39 @@ pred <- cbind(predict(bestOverall, newdata = data.frame(PQBsum_cust = 0:90)),
 
 sapply(1:3, function (x) lines(y = pred[,x], 
                                x = 0:90, 
-                               lty = x, lwd = 1.5))
-legend(x = 80, y = 10, 
+                               col = c("black","blue","red")[x], 
+                               lwd = 2))
+legend(x = 70, y = 10, 
        legend = c("Overall", "Male", "Female"), 
-       lty = 1:3, box.col = "white") }
+       col = c("black","blue","red"),
+       lty = 1,
+       box.col = "white") }
 
 
+# AIC plots -----
 
+SplineAICplots <- function(){
+  plot(sapply(modelList, AIC), 
+       ylab = "AIC", 
+       xlab = "PQB sum bend point",
+       main = "Overall",
+       col = "black")
+  abline(lty = "dashed", 
+         v = which.min(sapply(modelList, AIC)))
+  plot(sapply(modelListMale, AIC), 
+       ylab = "AIC", 
+       xlab = "PQB sum bend point",
+       main = "Male",
+       col = "blue")
+  abline(lty = "dashed", 
+         v = which.min(sapply(modelListMale, AIC)))
+  plot(sapply(modelListFemale, AIC), 
+       ylab = "AIC", 
+       xlab = "PQB sum bend point",
+       main = "Female",
+       col = "red",)
+  abline(lty = "dashed", 
+         v = which.min(sapply(modelListFemale, AIC)))
+}
 
 

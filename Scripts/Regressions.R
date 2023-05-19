@@ -9,9 +9,9 @@ summary(linear_model)
 # Plot
 pdf("LinearityAssumption.pdf", fonts = "serif", compress = F, pointsize = 8)
 linRegPlot <- ggplot(data = df, 
-       aes(x = PQBsum_cust, y = BDIsum, lty = sex, pch = sex)) + 
-  geom_jitter(inherit.aes = T) + 
-  geom_smooth(method = "lm", se = T, alpha = .1, col = "black") + 
+       aes(x = PQBsum_cust, y = BDIsum, lty = sex, col = sex)) + 
+  geom_jitter(inherit.aes = T, alpha = .4) + 
+  geom_smooth(method = "lm", se = T, alpha = .1) + 
   ggtitle("Linear regressions by sex and interaction.")
 dev.off()
 
