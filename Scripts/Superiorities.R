@@ -71,6 +71,7 @@ superiority_plots <- function(PQBcutoffs = PQBcutoffs, BDI, save = F, plots = T)
   title(main = "Superiorities with 95% CI for females")
   
   }
+  
   if (save) {
   return(list(superiorities = superiorities[which.max(sapply(superiorities, 
                                                              FUN = function(x) {
@@ -102,12 +103,7 @@ superiority_plots <- function(PQBcutoffs = PQBcutoffs, BDI, save = F, plots = T)
 
 
 # Save 'best' results 
-superiority_res <- superiority_plots(PQBcutoffs,df$BDIsum,save = T, plots = F)
-superiority_res[[1]][[1]]$parameter
-
-# Plot results.
-
-superiority_plots(PQBcutoffs, df$BDIsum)
-
-
+superiority_res <- superiority_plots(PQBcutoffs,df$BDIsum,
+                                     save = T, 
+                                     plots = F)
 

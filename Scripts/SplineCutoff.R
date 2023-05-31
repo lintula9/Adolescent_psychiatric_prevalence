@@ -52,8 +52,9 @@ bestFemale <- modelListFemale[[which.min(sapply(modelListFemale, AIC))]] # Choos
 # Plot ----
 
 SplinePlot <- function() {
+  
 plot(y = df$BDIsum, x = df$PQBsum_cust, 
-     main = "Spline cutoffs",
+     main = "Spline cutoffs for best splines",
      ylab = "BDI sum",
      xlab = "PQB sum (no Grandiosity)")
 pred <- cbind(predict(bestOverall, newdata = data.frame(PQBsum_cust = 0:90)),
@@ -70,6 +71,61 @@ legend(x = 70, y = 10,
        lty = 1,
        box.col = "white") }
 
+# All cutoffs plots ----
+
+SplinePlotAll <- function( ) {
+  
+  plot(y = df$BDIsum, 
+       x = df$PQBsum_cust, 
+       main = "Spline cutoffs using all data",
+       ylab = "BDI sum",
+       xlab = "PQB cutoff", 
+       col = "black" )
+  
+  preds <- sapply( modelList, FUN = function( x ) predict( x, 
+                                                               newdata = data.frame( PQBsum_cust = 0:90 ) ) )
+  sapply( 1 : ncol( preds ) , function( x ) lines(
+    y = preds[ , x ],
+    x = 0 : 90,
+    col = "black"
+  ))
+}
+
+SplinePlotMale <- function( ) {
+  
+  plot(y = df[ df$sex == "Male", ]$BDIsum, 
+       x = df[ df$sex == "Male", ]$PQBsum_cust, 
+       main = "Spline cutoffs for males",
+       ylab = "BDI sum",
+       xlab = "PQB cutoff", 
+       col = "blue" )
+  
+  preds <- sapply( modelListMale, FUN = function( x ) predict( x, 
+                                                            newdata = data.frame( PQBsum_cust = 0:90 ) ) )
+  sapply( 1 : ncol( preds ) , function( x ) lines(
+    y = preds[ , x ],
+    x = 0 : 90,
+    col = "blue"
+  ))
+  }
+
+SplinePlotFemale <- function( ) {
+  
+  plot(y = df[ df$sex == "Female", ]$BDIsum, 
+       x = df[ df$sex == "Female", ]$PQBsum_cust, 
+       main = "Spline cutoffs for males",
+       ylab = "BDI sum",
+       xlab = "PQB cutoff", 
+       col = "red" )
+  
+  preds <- sapply( modelListFemale, FUN = function( x ) predict( x, 
+                                                               newdata = data.frame( PQBsum_cust = 0:90 ) ) )
+  sapply( 1 : ncol( preds ) , function( x ) lines(
+    y = preds[ , x ],
+    x = 0 : 90,
+    col = "red"
+  ))
+}
 
 # AIC plots -----
 
@@ -97,5 +153,11 @@ SplineAICplots <- function(){
          v = which.min(sapply(modelListFemale, AIC)))
 }
 
+
+# Comparisons to simple linear regression models -----
+
+anova(
+  lm(BDIsum ~ PQBsum_cust, data = df),
+  bestOverall)
 
 
