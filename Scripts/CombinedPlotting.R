@@ -18,30 +18,39 @@ dev.off()
 
 tiff(units = "in", # 1: Superiority
      width = 12, height = 8, 
-     filename = "Figures/Publication_1_superiority.tiff", 
+     filename = "Figures/Publication_superiority_1_continuous.tiff", 
      res = 1080, pointsize = 12, family = "serif")
 superiority_plots( sexstrat = F, ciplot = F )
-dev.off()
+dev.off( )
 
 tiff(units = "in", # 2: Superiority for Mild depression
      width = 12, height = 8, 
-     filename = "Figures/Publication_2_SuperiorityForMildDepression.tiff", 
+     filename = "Figures/Publication_Superiority_2_ForMildDepression.tiff", 
      res = 1080, pointsize = 12, family = "serif")
-superiority_plots_mildDepression()
-dev.off()
+superiority_plots_mildDepression( )
+dev.off( )
+
+tiff(units = "in", # 2: Superiority for Mild depression
+     width = 12, height = 8, 
+     filename = "Figures/Publication_Superiority_3_ForMDD.tiff", 
+     res = 1080, pointsize = 12, family = "serif")
+superiority_plots_MDD( )
+dev.off( )
 
 tiff(units = "in", # 3: Cohen's D
      width = 12, height = 8, 
-     filename = "Figures/Publication_3_Cohen.tiff", 
+     filename = "Figures/Publication_Cohen.tiff", 
      res = 1080, pointsize = 12, family = "serif")
 cohenPlotCombined( )
-dev.off()
+dev.off( )
 
 tiff(units = "in", # 4: Splines
      width = 12, height = 8, 
-     filename = "Figures/Publication_4_Splines.tiff", 
+     filename = "Figures/Publication_Splines.tiff", 
      res = 1080, pointsize = 12, family = "serif")
 SplinePlot( )
-dev.off()
+dev.off( )
+
+
 
 
