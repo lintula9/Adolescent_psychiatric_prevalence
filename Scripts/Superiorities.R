@@ -1,19 +1,21 @@
 # Probability of superiority
 
-source("scripts/data_and_packages.R")
+
 
 # BDI Mild -------
-PQBcutoffs <- 1:40
+PQBcuts <- 1:40
 
-
+par(family = "serif")
 # Function that plots, and saves results if necessary.
-superiority_plots <- function(PQBcutoffs = PQBcutoffs, BDI, save = F, plots = T) {
+superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, plots = T, sexstrat = T, ciplot = T) {
   # Both sexes.
   superiorities <- lapply(PQBcutoffs, 
                           FUN = function (x){
     brunnermunzel.test(x = BDI[df$PQBsum_cust < x],
                        y = BDI[df$PQBsum_cust >= x])
     })
+  
+  
 
   # Male.
   superioritiesMale <- lapply(PQBcutoffs, 
@@ -35,27 +37,40 @@ superiority_plots <- function(PQBcutoffs = PQBcutoffs, BDI, save = F, plots = T)
   
   if (plots) {
   plot(sapply(superioritiesFemale, FUN = function(x) x$estimate), 
-       x = PQBcutoffs, type = "b", ylim = c( .5, 1 ), col = "red", ylab = "")
+       x = PQBcutoffs, type = "b", ylim = c( .5, 1 ), 
+       col = cols["Female"], 
+       lty = 3, lwd = 1.5, pch = 2,
+       ylab = "", xlab = "")
   lines(y = sapply(superioritiesMale, FUN = function(x) x$estimate), 
-        x = PQBcutoffs, type = "b", col = "blue", lwd = 1.5)
+        x = PQBcutoffs, type = "b", 
+        col = cols["Male"], 
+        lty = 2, lwd = 1.5, pch = 0)
   lines(y = sapply(superiorities, FUN = function(x) x$estimate), 
-        x = PQBcutoffs, type = "b", col = "black", lwd = 1.5)
-  title(ylab = "Superiority: P( X < Y ) + .5 * P( X = Y )")
-  legend(x = 30, y = .6, 
+        x = PQBcutoffs, type = "b", 
+        col = cols["Total"], 
+        lty = 1, lwd = 1.5, pch = 1)
+  title(ylab = "Superiority index", 
+        xlab = "PQB cut-off", 
+        cex.lab = 1.5 )
+  legend(x = 35, y = .6, 
          legend = c("Overall", "Male", "Female"), 
-         col = c("black","blue","red"), 
-         lty = 1, 
-         pch = 1, 
+         col = cols, 
+         lty = 1:3, 
+         cex = 1.5,
+         pch = c(1, 0, 2), 
          box.col = "white")
-  title(main = "Superiorities of BDI-21 for different PQ-B cutoffs")
-  
+  title(main = "")
+  if( ciplot ){
+    
   ciAll <- sapply(superiorities, FUN = function(x) x$conf.int)
   plot(sapply(superiorities, FUN = function(x) x$estimate), 
        x = PQBcutoffs, type = "b", ylim = c( .5, 1 ), col = "black", ylab = "")
   segments(x0 = PQBcutoffs, x1 = PQBcutoffs, 
            y0 = ciAll[1,], y1 = ciAll[2,])
   title(main = "Superiorities with 95% CI")
-  
+  }
+  if( sexstrat ) {
+    
   ciMale <- sapply(superioritiesMale, FUN = function(x) x$conf.int)
   plot(sapply(superioritiesMale, FUN = function(x) x$estimate), 
        x = PQBcutoffs, type = "b", ylim = c( .5, 1 ), col = "blue", ylab = "")
@@ -69,6 +84,8 @@ superiority_plots <- function(PQBcutoffs = PQBcutoffs, BDI, save = F, plots = T)
   segments(x0 = PQBcutoffs, x1 = PQBcutoffs, 
            y0 = ciFemale[1,], y1 = ciFemale[2,], col = "red")
   title(main = "Superiorities with 95% CI for females")
+  
+  }
   
   }
   

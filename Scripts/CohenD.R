@@ -1,18 +1,15 @@
 # Cohen's D for each PQ-B cutoff.
 
-source("scripts/data_and_packages.R")
+
 
 # Set cutoffs, as in superiorities.
 
 PQBcutoffs <- 1:40
 
-# test.
-
-cohen.d(x = df$BDIsum, group = df$PQBsum_cust < 12)$cohen.d
-
+par(family = "serif")
 # Function for D calculations.
 
-cohenPlot <- function() {
+cohenPlot <- function( publication = F ) {
 
   allRes <- sapply(PQBcutoffs, 
                    FUN = function(x) cohen.d(df$BDIsum, 
@@ -68,16 +65,31 @@ cohenPlotCombined <- function() {
   
   plot(allRes[ 2 , ], 
        type = "b", 
-       ylab = "Cohen's D", 
-       xlab = "PQ-B sum cutoff",
-       ylim = c( -1 , 2 ), main = "BDI difference effect sizes for different PQ-B cutoffs")
+       ylab = "Cohen's d", 
+       xlab = "PQ-B cut-off", 
+       cex.lab = 1.5,
+       pch = 1, 
+       col = cols["Total"],
+       ylim = c( -1 , 2 ), 
+       lty = 1,
+       main = "")
   lines(type = "b",
         y = maleRes[ 2, ],
-        x = PQBcutoffs,
-        col = "blue")
+        x = PQBcutoffs, 
+        pch = 0,
+        col = cols["Male"],
+        lty = 2)
   lines(type = "b",
         y = femaleRes[ 2, ],
         x = PQBcutoffs, 
-        col = "red")
-  
+        pch = 2, lty = 3,
+        col = cols["Female"])
+  legend(x = 35, 
+         y = -.38, 
+         cex = 1.5,
+         legend = c("Overall", "Male", "Female"), 
+         col = cols, 
+         lty = 1:3, 
+         pch = c(1, 0, 2), 
+         box.col = "white")
 }

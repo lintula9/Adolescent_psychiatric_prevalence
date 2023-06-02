@@ -1,7 +1,7 @@
 # Spline 'cutoff'
 
-bends <- 1:70
-
+bends <- 1:40
+par(family = "serif")
 # For all
 modelList <- list()
 for ( i in bends ) { # Fit models, make list of models
@@ -54,21 +54,24 @@ bestFemale <- modelListFemale[[which.min(sapply(modelListFemale, AIC))]] # Choos
 SplinePlot <- function() {
   
 plot(y = df$BDIsum, x = df$PQBsum_cust, 
-     main = "Spline cutoffs for best splines",
+     main = "", fontsize = 2, cex.lab = 1.5,
      ylab = "BDI sum",
-     xlab = "PQB sum (no Grandiosity)")
+     xlab = "PQB distress score",
+     col = cols[as.character(df$sex)])
 pred <- cbind(predict(bestOverall, newdata = data.frame(PQBsum_cust = 0:90)),
               predict(bestMale, newdata = data.frame(PQBsum_cust = 0:90)),
               predict(bestFemale, newdata = data.frame(PQBsum_cust = 0:90)))
 
 sapply(1:3, function (x) lines(y = pred[,x], 
                                x = 0:90, 
-                               col = c("black","blue","red")[x], 
-                               lwd = 2))
+                               col = cols[x], 
+                               lwd = 2,
+                               lty = x))
 legend(x = 70, y = 10, 
        legend = c("Overall", "Male", "Female"), 
-       col = c("black","blue","red"),
-       lty = 1,
+       col = cols, 
+       cex = 1.5,
+       lty = 1:3,
        box.col = "white") }
 
 # All cutoffs plots ----
