@@ -59,7 +59,9 @@ MDDCutsFemales <- function() { lapply(PQBcutoffs, # Females ony.
 which.max(sapply(mildCuts(), FUN = function(x) x$estimate))
 which.max(sapply(mildCutsMales(), FUN = function(x) x$estimate))
 which.max(sapply(mildCutsFemales(), FUN = function(x) x$estimate))
-
+which.max(sapply(MDDCuts(), FUN = function(x) x$estimate))
+which.max(sapply(MDDCutsMales(), FUN = function(x) x$estimate))
+which.max(sapply(MDDCutsFemales(), FUN = function(x) x$estimate))
 
 # Plotting function --------
 
