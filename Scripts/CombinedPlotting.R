@@ -23,17 +23,25 @@ tiff(units = "in", # 1: Superiority
 superiority_plots( sexstrat = F, ciplot = F )
 dev.off()
 
-tiff(units = "in", # 2: Cohen's D
+tiff(units = "in", # 2: Superiority for Mild depression
      width = 12, height = 8, 
-     filename = "Figures/Publication_2_Cohen.tiff", 
+     filename = "Figures/Publication_2_SuperiorityForMildDepression.tiff", 
+     res = 1080, pointsize = 12, family = "serif")
+superiority_plots_mildDepression()
+dev.off()
+
+tiff(units = "in", # 3: Cohen's D
+     width = 12, height = 8, 
+     filename = "Figures/Publication_3_Cohen.tiff", 
      res = 1080, pointsize = 12, family = "serif")
 cohenPlotCombined( )
 dev.off()
 
-tiff(units = "in", # 3: Splines
+tiff(units = "in", # 4: Splines
      width = 12, height = 8, 
-     filename = "Figures/Publication_3_Splines.tiff", 
+     filename = "Figures/Publication_4_Splines.tiff", 
      res = 1080, pointsize = 12, family = "serif")
 SplinePlot( )
 dev.off()
+
 

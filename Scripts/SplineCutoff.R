@@ -1,7 +1,6 @@
 # Spline 'cutoff'
 
 bends <- 1:40
-par(family = "serif")
 # For all
 modelList <- list()
 for ( i in bends ) { # Fit models, make list of models

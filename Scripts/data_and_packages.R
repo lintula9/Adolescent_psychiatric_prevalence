@@ -1,7 +1,8 @@
 # Packages.
 
 package_names <- c("haven", "ggplot2", "lavaan", "brunnermunzel", "mgcv", 
-                   "splines", "rlang", "psych", "glmnet", "foreign", "viridis", "RColorBrewer")
+                   "splines", "rlang", "psych", "glmnet", "foreign", 
+                   "viridis", "RColorBrewer")
 
 for (i in package_names){
   if ( !requireNamespace( i, 
@@ -18,7 +19,8 @@ df <- read_sav(data_path, encoding = "UTF-8")
 cols <- brewer.pal(n = 8, name = "Dark2")[1:3]
 names(cols) <- c("Total", "Male", "Female")
 theme_set(theme_bw())
-options(ggplot2.discrete.colour= color_palette)
+options(ggplot2.discrete.colour= cols)
+par(family = "serif")
 
 
 # Data modifications -------------
