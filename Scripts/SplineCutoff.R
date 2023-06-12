@@ -155,11 +155,39 @@ SplineAICplots <- function(){
          v = which.min(sapply(modelListFemale, AIC)))
 }
 
+# LogLik plots ------
+
+SplineLLplots <- function(){
+  plot(sapply(modelList, logLik), 
+       ylab = "log likelihood", 
+       xlab = "PQB bend point",
+       main = "Overall",
+       col = cols["Total"], 
+       cex.lab = 1.5)
+  abline(lty = "dashed", 
+         v = which.max(sapply(modelList, logLik)))
+  plot(sapply(modelListMale, logLik), 
+       ylab = "log likelihood", 
+       xlab = "PQB bend point",
+       main = "Male",
+       col = cols["Male"], 
+       cex.lab = 1.5)
+  abline(lty = "dashed", 
+         v = which.max(sapply(modelListMale, logLik)))
+  plot(sapply(modelListFemale, logLik), 
+       ylab = "log likelihood", 
+       xlab = "PQB bend point",
+       main = "Female",
+       col = cols["Female"], 
+       cex.lab = 1.5)
+  abline(lty = "dashed", 
+         v = which.max(sapply(modelListFemale, logLik)))
+}
 
 # Comparisons to simple linear regression models -----
 
 anova(
   lm(BDIsum ~ PQBsum_cust, data = df),
   bestOverall)
-
+summary(bestOverall)
 

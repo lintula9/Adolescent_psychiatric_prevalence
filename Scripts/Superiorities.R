@@ -58,35 +58,44 @@ superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, p
          cex = 1.5,
          pch = c(1, 0, 2), 
          box.col = "white")
-  title(main = "")
+  title(main = "") }
   if( ciplot ){
     
   ciAll <- sapply(superiorities, FUN = function(x) x$conf.int)
   plot(sapply(superiorities, FUN = function(x) x$estimate), 
-       x = PQBcutoffs, type = "b", ylim = c( .5, 1 ), col = "black", ylab = "")
+       x = PQBcutoffs, type = "b", ylim = c( .5, 1 ), col = cols["Total"], 
+       ylab = "", xlab = "")
   segments(x0 = PQBcutoffs, x1 = PQBcutoffs, 
-           y0 = ciAll[1,], y1 = ciAll[2,])
-  title(main = "Superiorities with 95% CI")
+           y0 = ciAll[1,], y1 = ciAll[2,], col = cols["Total"] )
+  title(ylab = "Superiority index", 
+        xlab = "PQB cut-off", main = "Total",
+        cex.lab = 1.5 )
   }
   if( sexstrat ) {
     
   ciMale <- sapply(superioritiesMale, FUN = function(x) x$conf.int)
   plot(sapply(superioritiesMale, FUN = function(x) x$estimate), 
-       x = PQBcutoffs, type = "b", ylim = c( .5, 1 ), col = "blue", ylab = "")
+       x = PQBcutoffs, type = "b", ylim = c( .5, 1 ), col = cols["Male"], 
+       ylab = "", xlab = "")
   segments(x0 = PQBcutoffs, x1 = PQBcutoffs, 
-           y0 = ciMale[1,], y1 = ciMale[2,], col = "blue")
-  title(main = "Superiorities with 95% CI for males")
+           y0 = ciMale[1,], y1 = ciMale[2,], col = cols["Male"])
+  title(ylab = "Superiority index", 
+        xlab = "PQB cut-off", main = "Males",
+        cex.lab = 1.5 )
   
   ciFemale <- sapply(superioritiesFemale, FUN = function(x) x$conf.int)
   plot(sapply(superioritiesFemale, FUN = function(x) x$estimate), 
-       x = PQBcutoffs, type = "b", ylim = c( .5, 1 ), col = "red", ylab = "")
+       x = PQBcutoffs, type = "b", ylim = c( .5, 1 ), col = cols["Female"], 
+       ylab = "", xlab = "")
   segments(x0 = PQBcutoffs, x1 = PQBcutoffs, 
-           y0 = ciFemale[1,], y1 = ciFemale[2,], col = "red")
-  title(main = "Superiorities with 95% CI for females")
+           y0 = ciFemale[1,], y1 = ciFemale[2,], col = cols["Female"])
+  title(ylab = "Superiority index", 
+        xlab = "PQB cut-off", main = "Females",
+        cex.lab = 1.5 )
   
   }
   
-  }
+  
   
   if (save) {
   return(list(superiorities = superiorities[which.max(sapply(superiorities, 
@@ -119,7 +128,7 @@ superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, p
 
 
 # Save 'best' results 
-superiority_res <- superiority_plots(PQBcutoffs,df$BDIsum,
+superiority_res <- superiority_plots(PQBcuts,df$BDIsum,
                                      save = T, 
                                      plots = F)
 

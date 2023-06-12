@@ -63,6 +63,12 @@ which.max(sapply(MDDCuts(), FUN = function(x) x$estimate))
 which.max(sapply(MDDCutsMales(), FUN = function(x) x$estimate))
 which.max(sapply(MDDCutsFemales(), FUN = function(x) x$estimate))
 
+plot(sapply(mildCuts(), FUN = function(x) x$p.value), col = cols["Total"])
+plot(sapply(MDDCuts(), FUN = function(x) x$p.value), col = cols["Total"])
+plot(sapply(mildCutsMales(), FUN = function(x) x$p.value), col = cols["Male"])
+plot(sapply(MDDCutsMales(), FUN = function(x) x$p.value), col = cols["Male"])
+plot(sapply(mildCutsFemales(), FUN = function(x) x$p.value), col = cols["Female"])
+plot(sapply(MDDCutsFemales(), FUN = function(x) x$p.value), col = cols["Female"])
 # Plotting function --------
 
 superiority_plots_mildDepression <- function(){ # Mild

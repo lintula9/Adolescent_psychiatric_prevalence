@@ -27,7 +27,7 @@ par(family = "serif")
 
 # 1. Change PQ-B 8 out of custom sums (Therman publication)
 PQBvars <- paste("PQB", 1:21, sep = "")
-PQBvars_cust <- PQBvars[-which(PQBvars == "PQB8")]
+PQBvars_cust <- PQBvars[-which(PQBvars == "PQB7")]
 df$PQBsum_cust <- apply(df[,PQBvars_cust], MARGIN = 1, sum, na.rm = F) # Custom distress sum
 df$sex <- factor(df$Gender_Male1_Female2, levels = c(1,2), labels = c("Male", "Female"))
 
