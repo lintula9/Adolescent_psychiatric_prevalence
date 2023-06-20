@@ -39,7 +39,8 @@ superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, p
        x = PQBcutoffs, type = "b", ylim = c( .5, 1 ), 
        col = cols["Female"], 
        lty = 3, lwd = 1.5, pch = 2,
-       ylab = "", xlab = "")
+       ylab = "", xlab = "",
+       cex.axis = 1.5)
   lines(y = sapply(superioritiesMale, FUN = function(x) x$estimate), 
         x = PQBcutoffs, type = "b", 
         col = cols["Male"], 
@@ -49,9 +50,9 @@ superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, p
         col = cols["Total"], 
         lty = 1, lwd = 1.5, pch = 1)
   title(ylab = "Superiority index", 
-        xlab = "PQB cut-off", 
+        xlab = "PQ-B cut-off", 
         cex.lab = 1.5 )
-  legend(x = 35, y = .6, 
+  legend(x = 30, y = .57, 
          legend = c("Overall", "Male", "Female"), 
          col = cols, 
          lty = 1:3, 
@@ -68,7 +69,7 @@ superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, p
   segments(x0 = PQBcutoffs, x1 = PQBcutoffs, 
            y0 = ciAll[1,], y1 = ciAll[2,], col = cols["Total"] )
   title(ylab = "Superiority index", 
-        xlab = "PQB cut-off", main = "Total",
+        xlab = "PQ-B cut-off", main = "Total",
         cex.lab = 1.5 )
   }
   if( sexstrat ) {
@@ -80,7 +81,7 @@ superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, p
   segments(x0 = PQBcutoffs, x1 = PQBcutoffs, 
            y0 = ciMale[1,], y1 = ciMale[2,], col = cols["Male"])
   title(ylab = "Superiority index", 
-        xlab = "PQB cut-off", main = "Males",
+        xlab = "PQ-B cut-off", main = "Males",
         cex.lab = 1.5 )
   
   ciFemale <- sapply(superioritiesFemale, FUN = function(x) x$conf.int)
@@ -90,7 +91,7 @@ superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, p
   segments(x0 = PQBcutoffs, x1 = PQBcutoffs, 
            y0 = ciFemale[1,], y1 = ciFemale[2,], col = cols["Female"])
   title(ylab = "Superiority index", 
-        xlab = "PQB cut-off", main = "Females",
+        xlab = "PQ-B cut-off", main = "Females",
         cex.lab = 1.5 )
   
   }

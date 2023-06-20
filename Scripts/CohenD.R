@@ -70,22 +70,23 @@ cohenPlotCombined <- function() {
        cex.lab = 1.5,
        pch = 1, 
        col = cols["Total"],
-       ylim = c( -1 , 2 ), 
-       lty = 1,
-       main = "")
+       ylim = c( 0 , 2 ), 
+       lty = 1, lwd = 1.5,
+       main = "",
+       cex.axis = 1.5)
   lines(type = "b",
         y = maleRes[ 2, ],
         x = PQBcutoffs, 
         pch = 0,
         col = cols["Male"],
-        lty = 2)
+        lty = 2, lwd = 1.5)
   lines(type = "b",
         y = femaleRes[ 2, ],
         x = PQBcutoffs, 
         pch = 2, lty = 3,
-        col = cols["Female"])
-  legend(x = 35, 
-         y = -.38, 
+        col = cols["Female"], lwd = 1.5)
+  legend(x = 30, 
+         y = .25, 
          cex = 1.5,
          legend = c("Overall", "Male", "Female"), 
          col = cols, 

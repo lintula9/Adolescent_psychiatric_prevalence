@@ -1,5 +1,5 @@
 # For combined plotting.
-if( !exists( "df" )) source("Scripts/data_and_packages.R")
+if( !exists( "package_names" )) source("Scripts/data_and_packages.R")
 if( !exists( "modelList" )) source( "Scripts/SplineCutoff.R" )
 if( !exists( "cohenPlot" )) source( "Scripts/CohenD.R" )
 if( !exists("superiority_plots")) source( "Scripts/Superiorities.R" )
@@ -17,17 +17,23 @@ dev.off()
 # Publication plots: -----
 
 tiff(units = "in", # 1 Figure 1, combined plot.
-     width = 10, height = 16, 
+     width = 16, height = 9, 
      filename = "Figures/Publication_Figure1Combined.tiff", 
-     res = 720, pointsize = 12, family = "serif")
-par(mfrow = c(3,1))
+     res = 720, pointsize = 10, family = "serif")
+par(mfrow = c(1,2))
 superiority_plots( sexstrat = F, ciplot = F )
-title(main = "A")
+title(main = "A", cex.main = 1.5)
 cohenPlotCombined( )
-title(main = "B")
-SplinePlot( )
-title(main = "C")
+title(main = "B", cex.main = 1.5)
 par(mfrow=c(1,1))
+dev.off( )
+
+tiff(units = "in", # 1 Figure 1, combined plot.
+     width = 12, height = 9, 
+     filename = "Figures/Publication_Figure2Splines.tiff", 
+     res = 720, pointsize = 10, family = "serif")
+par(mfrow=c(1,1))
+SplinePlot()
 dev.off( )
 
 # Supplementary:
