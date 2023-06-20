@@ -66,7 +66,7 @@ sapply(1:3, function (x) lines(y = pred[,x],
                                col = cols[x], 
                                lwd = 2,
                                lty = x))
-legend(x = 70, y = 10, 
+legend(x = 75, y = 10, 
        legend = c("Overall", "Male", "Female"), 
        col = cols, 
        cex = 1.5,
@@ -160,7 +160,7 @@ SplineAICplots <- function(){
 SplineLLplots <- function(){
   plot(sapply(modelList, logLik), 
        ylab = "log likelihood", 
-       xlab = "PQB bend point",
+       xlab = "PQB elbow point",
        main = "Overall",
        col = cols["Total"], 
        cex.lab = 1.5)
@@ -168,7 +168,7 @@ SplineLLplots <- function(){
          v = which.max(sapply(modelList, logLik)))
   plot(sapply(modelListMale, logLik), 
        ylab = "log likelihood", 
-       xlab = "PQB bend point",
+       xlab = "PQB elbow point",
        main = "Male",
        col = cols["Male"], 
        cex.lab = 1.5)
@@ -176,7 +176,7 @@ SplineLLplots <- function(){
          v = which.max(sapply(modelListMale, logLik)))
   plot(sapply(modelListFemale, logLik), 
        ylab = "log likelihood", 
-       xlab = "PQB bend point",
+       xlab = "PQB elbow point",
        main = "Female",
        col = cols["Female"], 
        cex.lab = 1.5)
@@ -188,6 +188,16 @@ SplineLLplots <- function(){
 
 anova(
   lm(BDIsum ~ PQBsum_cust, data = df),
-  bestOverall)
+  bestOverall) * 40
+anova(
+  lm(BDIsum ~ PQBsum_cust, data = df[df$sex == "Male", ]),
+  bestMale) * 40
+anova(
+  lm(BDIsum ~ PQBsum_cust, data = df[df$sex == "Female", ]),
+  bestFemale) * 40
+
 summary(bestOverall)
+
+# Calculate slopes: ------
+
 

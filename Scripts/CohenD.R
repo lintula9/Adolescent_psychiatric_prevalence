@@ -93,3 +93,33 @@ cohenPlotCombined <- function() {
          pch = c(1, 0, 2), 
          box.col = "white")
 }
+
+
+# Highest d values: -----
+
+CohenRes <- lapply(PQBcutoffs, 
+                 FUN = function(x) cohen.d(df$BDIsum, 
+                                           group = df$PQBsum_cust >= x)) 
+CohenResMales <- lapply(PQBcutoffs, 
+                  FUN = function(x) cohen.d(df[df$sex == "Male",]$BDIsum, 
+                                            group = df[df$sex == "Male",]$PQBsum_cust >= x))
+CohenResFemales <- lapply(PQBcutoffs, 
+                    FUN = function(x) cohen.d(df[df$sex == "Female",]$BDIsum, 
+                                              group = df[df$sex == "Female",]$PQBsum_cust >= x)) 
+
+if(FALSE) {
+  
+  CohenRes[[which.max(sapply(CohenRes, 
+                             FUN = function(x) {x$cohen.d[2]}))]]
+  CohenRes[[which.max(sapply(CohenRes, 
+                             FUN = function(x) {x$cohen.d[2]}))]]$p
+  
+  CohenResMales[[which.max(sapply(CohenResMales, FUN = function(x) x$cohen.d[2]))]]
+  CohenResMales[[which.max(sapply(CohenRes, FUN = function(x) x$cohen.d[2]))]]$p
+  
+  
+  CohenResFemales[[which.max(sapply(CohenResMales, FUN = function(x) x$cohen.d[2]))]]
+  CohenResFemales[[which.max(sapply(CohenRes, FUN = function(x) x$cohen.d[2]))]]$p
+  
+  
+}
