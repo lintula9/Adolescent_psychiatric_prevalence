@@ -2,7 +2,7 @@
 
 package_names <- c("haven", "ggplot2", "lavaan", "brunnermunzel", "mgcv", 
                    "splines", "rlang", "psych", "glmnet", "foreign", 
-                   "viridis", "RColorBrewer")
+                   "viridis", "RColorBrewer", "cowplot")
 
 for (i in package_names){
   if ( !requireNamespace( i, 
