@@ -2,7 +2,7 @@
 
 package_names <- c("haven", "ggplot2", "lavaan", "brunnermunzel", "mgcv", 
                    "splines", "rlang", "psych", "glmnet", "foreign", 
-                   "viridis", "RColorBrewer", "cowplot")
+                   "viridis", "RColorBrewer", "cowplot", "ggrepel")
 
 for (i in package_names){
   if ( !requireNamespace( i, 
@@ -21,8 +21,7 @@ names(cols) <- c("Total", "Male", "Female")
 theme_set(theme_bw())
 options(ggplot2.discrete.colour= cols)
 par(family = "serif")
-
-
+pqbItems <- read_lines("C:/Users/lintu/OneDrive/Desktop/PTO tutkimus/PQ-B_items.txt")
 # Data modifications -------------
 
 # 1. Change PQ-B 8 out of custom sums (Therman publication)
