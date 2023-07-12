@@ -1,7 +1,8 @@
 # Lasso paths
 lassoRegDat <- na.omit(df[,c("BDIsum", PQBvars)]) # Data for lassoregs.
 lassoRes <- glmnet(y = lassoRegDat$BDIsum, #Lassores.
-                   as.matrix(x = lassoRegDat[,PQBvars])) 
+                   as.matrix(x = lassoRegDat[,PQBvars]), ) 
+lassoRes$l1_norm <- colSums(abs(lassoRes$beta))
 linesDf <- reshape2::melt(as.matrix(lassoRes$beta)) #figData
 linesDf$l1_norm <- rep(colSums(abs(lassoRes$beta)), each = 21) #figData
 linesDf$Var1 <- gsub(pattern = "PQB",replacement = "PQ-B ",x = linesDf$Var1)
@@ -16,14 +17,27 @@ names(pqbcols) <- lastVals$Var1
 pqbltys <- c()
 pqbltys[ lastVals$Var1 ] <- rep(c(1,2,3), times = 7)
 names(pqbltys) <- lastVals$Var1
+BestLamda <- cv.glmnet(y = lassoRegDat$BDIsum, #Lassores.
+                       x = as.matrix(x = lassoRegDat[,PQBvars]), 
+                       type.measure = "mse", nfolds = nrow(lassoRegDat))
+bestLamdaIndex <- BestLamda$index[ 1 ]
+
 
 if(FALSE){
-tiff("Figures/Figure1_VarianceExplained.tiff", 
-    pointsize = 12, 
-    height = 8, 
-    width = 8, res = 480, 
-    units = "in", family = "serif") 
 
+tiff("Figures/Figure1_Combined.tiff",
+     pointsize = 12,
+     height = 8,
+     width = 14, res = 480,
+     units = "in", family = "serif")
+
+  # tiff("Figures/Figure1_VarianceExplained.tiff",
+  #   pointsize = 12,
+  #   height = 8,
+  #   width = 8, res = 480,
+  #   units = "in", family = "serif")
+cowplot::plot_grid(align = "hv", labels = "AUTO", 
+                   label_fontfamily = "serif", 
   #Gridstart.
   # ggplot(tibble( dev.ratio = lassoRes$dev.ratio, #1.Fig
   #                lamda = log(lassoRes$lambda),
@@ -43,12 +57,16 @@ tiff("Figures/Figure1_VarianceExplained.tiff",
                  dev.increment = lassoRes$dev.ratio / colSums(abs(lassoRes$beta))),
          aes( y = dev.ratio , x = l1_norm )) +
     scale_x_continuous(sec.axis = sec_axis( ~.*1, ""), minor_breaks = NULL) +
-    geom_line( color = "#D95F02" ) +
+    scale_y_continuous(sec.axis = sec_axis( ~.*21, "Predictor variables included", 
+                                            breaks = seq(1,21,2))) + 
+    geom_line( aes(color = "Var. explained") , col = cols[ 2 ] ) +
+    geom_line( aes(color = "df", y = df/21 ), col = cols[ 3 ], lty = 2) +
     labs(y = "Variance explained", x = expression("L1 norm")) +
     theme(text=element_text(size=14,  family="serif")) +
-    ggtitle("A")
+    geom_vline( xintercept = lassoRes$l1_norm[ bestLamdaIndex ],
+                col = "darkgray"), 
 
-  dev.off()
+  # dev.off()
   # ggplot(tibble( dev.ratio = lassoRes$dev.ratio, #3.Fig
   #                lamda = log(lassoRes$lambda),
   #                l1_norm = colSums(abs(lassoRes$beta)),
@@ -60,11 +78,10 @@ tiff("Figures/Figure1_VarianceExplained.tiff",
   #   theme(text=element_text(size=14,  family="serif"))+
   #   ggtitle("C"), 
   
-tiff("Figures/Figure2_LassoPaths.tiff", 
-       pointsize = 12, 
-       height = 8, width = 8, res = 480, 
-     units = "in", family = "serif") 
-par(adj = 0)
+# tiff("Figures/Figure2_LassoPaths.tiff", 
+#        pointsize = 12, 
+#        height = 8, width = 8, res = 480, 
+#      units = "in", family = "serif") 
 
   ggplot( linesDf, 
           aes( y = value, color = Var1, x = l1_norm )) +
@@ -81,12 +98,12 @@ par(adj = 0)
                      aes(label = Var1), 
                      nudge_x = 1, color = pqbcols,
                      segment.linetype = 3, direction = "y", hjust=0) + 
-    ggtitle("B") + 
+    geom_vline( xintercept = lassoRes$l1_norm[ bestLamdaIndex ],  
+                col = "darkgray") + 
     guides(label = "none", color = "none")
-  par(adj = 0.5)
-dev.off()
+# dev.off()
  
-  #GridEnd.
+)#GridEnd.
 
 dev.off(); #PDF end
 
