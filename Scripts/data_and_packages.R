@@ -23,10 +23,13 @@ theme_set(theme_bw())
 options(ggplot2.discrete.colour= cols)
 par(family = "serif")
 pqbItems <- read_lines("C:/Users/lintu/OneDrive/Desktop/PTO tutkimus/PQ-B_items.txt")
+bdiItems <- read_lines("C:/Users/lintu/OneDrive/Desktop/PTO tutkimus/BDI_items.txt")
+
 # Data modifications -------------
 
 # 1. Change PQ-B 8 out of custom sums (Therman publication)
 PQBvars <- paste("PQB", 1:21, sep = "")
+BDIvars <- paste("BDI", 1:21, sep = "")
 PQBvars_cust <- PQBvars[-which(PQBvars == "PQB7")]
 df$PQBsum_cust <- apply(df[,PQBvars_cust], MARGIN = 1, sum, na.rm = F) # Custom distress sum
 df$sex <- factor(df$Gender_Male1_Female2, levels = c(1,2), labels = c("Male", "Female"))
