@@ -88,10 +88,15 @@ SplinePlotAll <- function( ) {
   
   preds <- sapply( modelList, FUN = function( x ) predict( x, 
                                                                newdata = data.frame( PQBsum_cust = 0:90 ) ) )
+  
+  bfs <- bic_to_bf(sapply(modelList, BIC), denominator = sapply(modelList, BIC)[1], log = F)
+  alphas <- (sapply(bfs, FUN = function(x) exp( x ) / sum(exp(bfs))) + .5) 
+  alphas <- alphas * (1 / max(alphas))
+  
   sapply( 1 : ncol( preds ) , function( x ) lines(
     y = preds[ , x ],
     x = 0 : 90,
-    col = "black"
+    col = scales::alpha( cols[ 1 ], alphas[ x ])
   ))
 }
 
@@ -201,5 +206,8 @@ anova(
 summary(bestOverall)
 
 # Calculate slopes: ------
+
+
+# Test
 
 
