@@ -1,5 +1,15 @@
 # Probability of superiority
 
+# Girls vs. Boysssss test for a) PQ-B count, b) PQ-B Distress:
+#a)
+brunnermunzel.test(x = df$PQBdicsum[df$sex == "Male"],
+                   y = df$PQBdicsum[df$sex == "Female"])
+#b)
+brunnermunzel.test(x = df$PQBsum_cust[df$sex == "Male"],
+                   y = df$PQBsum_cust[df$sex == "Female"])
+#c), BDI
+brunnermunzel.test(x = df$BDIsum[df$sex == "Male"],
+                   y = df$BDIsum[df$sex == "Female"])
 
 
 # BDI Mild -------

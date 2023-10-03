@@ -57,7 +57,8 @@ plot(y = df$BDIsum, x = df$PQBsum_cust,
      ylab = "BDI sum",
      xlab = "PQ-B distress score",
      col = cols[as.character(df$sex)],
-     cex.axis = 1.5)
+     cex.axis = 2,
+     cex.lab = 2)
 pred <- cbind(predict(bestOverall, newdata = data.frame(PQBsum_cust = 0:90)),
               predict(bestMale, newdata = data.frame(PQBsum_cust = 0:90)),
               predict(bestFemale, newdata = data.frame(PQBsum_cust = 0:90)))
@@ -67,12 +68,14 @@ sapply(1:3, function (x) lines(y = pred[,x],
                                col = cols[x], 
                                lwd = 2,
                                lty = x))
-legend(x = 75, y = 10, 
+legend(x = 70, y = 10, 
        legend = c("Overall", "Male", "Female"), 
        col = cols, 
        cex = 1.5,
+       lwd = 3,
        lty = 1:3,
-       box.col = "white") }
+       box.col = "white") 
+  }
 
 # All cutoffs plots ----
 
@@ -90,7 +93,7 @@ SplinePlotAll <- function( ) {
                                                                newdata = data.frame( PQBsum_cust = 0:90 ) ) )
   
   bfs <- bic_to_bf(sapply(modelList, BIC), denominator = sapply(modelList, BIC)[1], log = F)
-  alphas <- (sapply(bfs, FUN = function(x) exp( x ) / sum(exp(bfs))) + .5) 
+  alphas <- (sapply(bfs, FUN = function(x) exp( x ) / sum(exp(bfs)))) 
   alphas <- alphas * (1 / max(alphas))
   
   sapply( 1 : ncol( preds ) , function( x ) lines(
@@ -195,13 +198,13 @@ SplineLLplots <- function(){
 
 anova(
   lm(BDIsum ~ PQBsum_cust, data = df),
-  bestOverall) * 40
+  bestOverall)
 anova(
   lm(BDIsum ~ PQBsum_cust, data = df[df$sex == "Male", ]),
-  bestMale) * 40
+  bestMale)
 anova(
   lm(BDIsum ~ PQBsum_cust, data = df[df$sex == "Female", ]),
-  bestFemale) * 40
+  bestFemale)
 
 summary(bestOverall)
 

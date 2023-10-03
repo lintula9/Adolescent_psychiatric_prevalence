@@ -3,7 +3,8 @@
 package_names <- c("haven", "ggplot2", "lavaan", "brunnermunzel", "mgcv", 
                    "splines", "rlang", "psych", "glmnet", "foreign", 
                    "viridis", "RColorBrewer", "cowplot", "ggrepel",
-                   "lavaan", "bayestestR", "scales")
+                   "lavaan", "bayestestR", "scales", "mlr3measures",
+                   "mice")
 
 for (i in package_names){
   if ( !requireNamespace( i, 
@@ -30,8 +31,9 @@ bdiItems <- read_lines("C:/Users/lintu/OneDrive/Desktop/PTO tutkimus/BDI_items.t
 # 1. Change PQ-B 8 out of custom sums (Therman publication)
 PQBvars <- paste("PQB", 1:21, sep = "")
 BDIvars <- paste("BDI", 1:21, sep = "")
-PQBvars_cust <- PQBvars[-which(PQBvars == "PQB7")]
+PQBvars_cust <- PQBvars[-which(PQBvars %in% c( "PQB7", "PQB12" ) ) ]
 df$PQBsum_cust <- apply(df[,PQBvars_cust], MARGIN = 1, sum, na.rm = F) # Custom distress sum
 df$sex <- factor(df$Gender_Male1_Female2, levels = c(1,2), labels = c("Male", "Female"))
 
-
+#missing pattern
+md.pattern(df[,c(paste("PQB",1:21, sep = ""))])
