@@ -36,4 +36,4 @@ df$PQBsum_cust <- apply(df[,PQBvars_cust], MARGIN = 1, sum, na.rm = F) # Custom 
 df$sex <- factor(df$Gender_Male1_Female2, levels = c(1,2), labels = c("Male", "Female"))
 
 #missing pattern
-md.pattern(df[,c(paste("PQB",1:21, sep = ""))])
+if(FALSE){md.pattern(df[,c(paste("PQB",1:21, sep = ""))])}

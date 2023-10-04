@@ -1,6 +1,6 @@
 # CutOffs for dichotomized BDI -----
 
-PQBcutoffs <- 1:40 # Set cut-offs.
+PQBcutoffs <- 1:63 # Set cut-offs.
 
 # Mild depression ------
 mildCuts <- function() { lapply( PQBcutoffs, # Using all cases.

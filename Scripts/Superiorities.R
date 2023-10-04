@@ -13,7 +13,7 @@ brunnermunzel.test(x = df$BDIsum[df$sex == "Male"],
 
 
 # BDI Mild -------
-PQBcuts <- 1:40
+PQBcuts <- 1:63
 
 # Function that plots, and saves results if necessary.
 superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, plots = T, sexstrat = T, ciplot = T) {
