@@ -28,7 +28,7 @@ for ( i in PQBcuts ) {
 DORES_mild_male <- matrix(0,ncol = 7, nrow = length(PQBcuts))
 colnames(DORES_mild_male) <- c("logDOR","DOR", "Upper", "Lower", "SE", "n_TP", "n_FP")
 for ( i in PQBcuts ) {
-  with(
+  tryCatch(expr = {with(
     na.omit(df[df$sex == "Male", c("BDImild", "PQBsum_cust")]), expr = {
       
       restable <- table( BDImild, PQBsum_cust >= i )
@@ -41,7 +41,7 @@ for ( i in PQBcuts ) {
       SElogDOR <- sqrt( (1/TP) + (1/FN) + (1/FP) + (1/TN) )
       DORES_mild_male[ i , c("logDOR", "DOR", "Upper", "Lower", "SE", "n_TP", "n_FP")] <<- c(logDOR, DOR, exp( logDOR + 1.96*SElogDOR ), exp( logDOR - 1.96*SElogDOR ), exp( SElogDOR ),  restable[2,2], restable[1,2]) }
     
-  )
+  )}, error = function(e) print("Some errors in BDI mild loops..."))
 }
 
 
@@ -83,7 +83,7 @@ DORplot_mild <- function( ) {
   title(ylab = "DOR", 
         xlab = "PQ-B cut-off", 
         cex.lab = 1.5 )
-  legend(x = 60, y = 18, 
+  legend(x = 55, y = 18, 
          legend = c("Overall", "Male", "Female"), 
          col = cols, 
          lty = 1:3, 
@@ -131,7 +131,8 @@ for ( i in PQBcuts ) {
 DORES_MDD_male <- matrix(0,ncol = 7, nrow = length(PQBcuts))
 colnames(DORES_MDD_male) <- c("logDOR","DOR", "Upper", "Lower", "SE", "n_TP", "n_FP")
 for ( i in PQBcuts ) {
-  with(
+  tryCatch(
+    expr = {with(
     na.omit(df[df$sex == "Male", c("BDIMDD", "PQBsum_cust")]), expr = {
       
       restable <- table( BDIMDD, PQBsum_cust >= i )
@@ -144,6 +145,7 @@ for ( i in PQBcuts ) {
       SElogDOR <- sqrt( (1/TP) + (1/FN) + (1/FP) + (1/TN) )
       DORES_MDD_male[ i , c("logDOR", "DOR", "Upper", "Lower", "SE", "n_TP", "n_FP")] <<- c(logDOR, DOR, exp( logDOR + 1.96*SElogDOR ), exp( logDOR - 1.96*SElogDOR ), exp( SElogDOR ),  restable[2,2], restable[1,2]) }
     
+  )}, error = function(e) print("Some errors in for lopps..")
   )
 }
 
@@ -186,7 +188,7 @@ DORplot_MDD <- function( ) {
   title(ylab = "DOR", 
         xlab = "PQ-B cut-off", 
         cex.lab = 1.5 )
-  legend(x = 60, y = 18, 
+  legend(x = 55, y = 18, 
          legend = c("Overall", "Male", "Female"), 
          col = cols, 
          lty = 1:3, 
@@ -208,3 +210,4 @@ DORplot_MDD_CIs <- function() {
   }
   
   par(mfrow = c(1,1))}
+

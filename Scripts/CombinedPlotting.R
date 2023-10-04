@@ -23,12 +23,22 @@ superiority_plots( sexstrat = F, ciplot = F )
 title(main = "A", cex.main = 1.5)
 # # #
 # DORPLOT HERE !!!!!!
+tiff(units = "in", # 2 Figure 3, DORPLOT plot.
+     width = 16, height = 9, 
+     filename = "Figures/Publication_Figure3DOR.tiff", 
+     res = 720, pointsize = 10, family = "serif")
+par(mfrow = c(1,2) )
+DORplot_mild()
+DORplot_MDD()
+par(mfrow=c(1,1))
+dev.off()
+
 # # #
 title(main = "B", cex.main = 1.5)
 par(mfrow=c(1,1))
 dev.off( )
 
-tiff(units = "in", # 1 Figure 2, SPLINE plot.
+tiff(units = "in", # 1 Figure 3, SPLINE plot.
      width = 12, height = 9, 
      filename = "Figures/Publication_Figure2Splines.tiff", 
      res = 720, pointsize = 10, family = "serif")
@@ -70,6 +80,16 @@ tiff(units = "in", # S2: Spline log likelihood plot
      res = 640, pointsize = 12, family = "serif")
 par(mfrow = c(3,1))
 SplineLLplots( )
+par(mfrow = c(1,1))
+dev.off( )
+
+tiff(units = "in", # S4: DOR CIs
+     width = 8, height = 12, 
+     filename = "Figures/Publication_DOR_S4_CIs.tiff", 
+     res = 640, pointsize = 12, family = "serif")
+par(mfrow = c(2,1))
+DORplot_mild_CIs()
+DORplot_MDD_CIs()
 par(mfrow = c(1,1))
 dev.off( )
 
