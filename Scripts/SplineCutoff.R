@@ -53,7 +53,7 @@ bestFemale <- modelListFemale[[which.min(sapply(modelListFemale, AIC))]] # Choos
 SplinePlot <- function() {
   
 plot(y = df$BDIsum, x = df$PQBsum_cust, 
-     main = "", fontsize = 2, cex.lab = 1.5,
+     main = "", fontsize = 2, cex.lab = 2,
      ylab = "BDI sum",
      xlab = "PQ-B distress score",
      col = cols[as.character(df$sex)],
@@ -87,7 +87,7 @@ SplinePlotAll <- function( ) {
        ylab = "BDI sum",
        xlab = "PQB cutoff", 
        col = "black",
-       cex.axis = 1.5)
+       cex.axis = 2)
   
   preds <- sapply( modelList, FUN = function( x ) predict( x, 
                                                                newdata = data.frame( PQBsum_cust = 0:90 ) ) )
@@ -173,7 +173,7 @@ SplineLLplots <- function(){
        xlab = "PQB elbow point",
        main = "Overall",
        col = cols["Total"], 
-       cex.lab = 1.5, cex.axis = 1.5)
+       cex.lab = 2, cex.axis = 2)
   abline(lty = "dashed", 
          v = which.max(sapply(modelList, logLik)))
   plot(sapply(modelListMale, logLik), 
@@ -181,7 +181,7 @@ SplineLLplots <- function(){
        xlab = "PQB elbow point",
        main = "Male",
        col = cols["Male"], 
-       cex.lab = 1.5, cex.axis = 1.5)
+       cex.lab = 2, cex.axis = 2)
   abline(lty = "dashed", 
          v = which.max(sapply(modelListMale, logLik)))
   plot(sapply(modelListFemale, logLik), 
@@ -189,7 +189,7 @@ SplineLLplots <- function(){
        xlab = "PQB elbow point",
        main = "Female",
        col = cols["Female"], 
-       cex.lab = 1.5, cex.axis = 1.5)
+       cex.lab = 2, cex.axis = 2)
   abline(lty = "dashed", 
          v = which.max(sapply(modelListFemale, logLik)))
 }

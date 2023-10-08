@@ -83,7 +83,8 @@ superiority_plots_mildDepression <- function(){ # Mild
              ylim = c( .5, 1 ), 
              col = cols["Female"], 
              lty = 3, lwd = 1.5, pch = 2,
-             ylab = "", xlab = "")
+             ylab = "", xlab = "",
+             cex.axis = 2)
         lines(y = sapply(mildCutsMales(), FUN = function(x) x$estimate), 
               x = PQBcutoffs, 
               type = "b", 
@@ -95,9 +96,9 @@ superiority_plots_mildDepression <- function(){ # Mild
               col = cols["Total"], 
               lty = 1, lwd = 1.5, pch = 1)
         title(ylab = "Superiority index", 
-              xlab = "PQB cut-off", 
-              cex.lab = 1.5 )
-        legend(x = 35, y = .6, 
+              xlab = "PQ-B cut-off", 
+              cex.lab = 2 )
+        legend(x = 30, y = .9, 
                legend = c("Overall", "Male", "Female"), 
                col = cols, 
                lty = 1:3, 
@@ -113,7 +114,8 @@ superiority_plots_MDD <- function(){ # MDD
        ylim = c( .5, 1 ), 
        col = cols["Female"], 
        lty = 3, lwd = 1.5, pch = 2,
-       ylab = "", xlab = "")
+       ylab = "", xlab = "",
+       cex.axis = 2)
   lines(y = sapply(MDDCutsMales(), FUN = function(x) x$estimate), 
         x = PQBcutoffs, 
         type = "b", 
@@ -125,9 +127,9 @@ superiority_plots_MDD <- function(){ # MDD
         col = cols["Total"], 
         lty = 1, lwd = 1.5, pch = 1)
   title(ylab = "Superiority index", 
-        xlab = "PQB cut-off", 
-        cex.lab = 1.5 )
-  legend(x = 35, y = .6, 
+        xlab = "PQ-B cut-off", 
+        cex.lab = 2 )
+  legend(x = 30, y = .9, 
          legend = c("Overall", "Male", "Female"), 
          col = cols, 
          lty = 1:3, 

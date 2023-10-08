@@ -50,7 +50,8 @@ superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, p
        col = cols["Female"], 
        lty = 3, lwd = 1.5, pch = 2,
        ylab = "", xlab = "",
-       cex.axis = 1.5)
+       cex.axis = 2,
+       cex.lab = 2)
   lines(y = sapply(superioritiesMale, FUN = function(x) x$estimate), 
         x = PQBcutoffs, type = "b", 
         col = cols["Male"], 
@@ -61,7 +62,7 @@ superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, p
         lty = 1, lwd = 1.5, pch = 1)
   title(ylab = "Superiority index", 
         xlab = "PQ-B cut-off", 
-        cex.lab = 1.5 )
+        cex.lab = 2 )
   legend(x = 30, y = .57, 
          legend = c("Overall", "Male", "Female"), 
          col = cols, 
@@ -75,12 +76,13 @@ superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, p
   ciAll <- sapply(superiorities, FUN = function(x) x$conf.int)
   plot(sapply(superiorities, FUN = function(x) x$estimate), 
        x = PQBcutoffs, type = "b", ylim = c( .5, 1 ), col = cols["Total"], 
-       ylab = "", xlab = "")
+       ylab = "", xlab = "",
+       cex.axis = 2)
   segments(x0 = PQBcutoffs, x1 = PQBcutoffs, 
            y0 = ciAll[1,], y1 = ciAll[2,], col = cols["Total"] )
   title(ylab = "Superiority index", 
         xlab = "PQ-B cut-off", main = "Total",
-        cex.lab = 1.5 )
+        cex.lab = 2 )
   }
   if( sexstrat ) {
     
@@ -92,7 +94,7 @@ superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, p
            y0 = ciMale[1,], y1 = ciMale[2,], col = cols["Male"])
   title(ylab = "Superiority index", 
         xlab = "PQ-B cut-off", main = "Males",
-        cex.lab = 1.5 )
+        cex.lab = 2 )
   
   ciFemale <- sapply(superioritiesFemale, FUN = function(x) x$conf.int)
   plot(sapply(superioritiesFemale, FUN = function(x) x$estimate), 
@@ -102,7 +104,7 @@ superiority_plots <- function(PQBcutoffs = PQBcuts, BDI = df$BDIsum, save = F, p
            y0 = ciFemale[1,], y1 = ciFemale[2,], col = cols["Female"])
   title(ylab = "Superiority index", 
         xlab = "PQ-B cut-off", main = "Females",
-        cex.lab = 1.5 )
+        cex.lab = 2 )
   
   }
   

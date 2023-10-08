@@ -64,13 +64,13 @@ cohenPlotCombined <- function() {
        type = "b", 
        ylab = "Cohen's d", 
        xlab = "PQ-B cut-off", 
-       cex.lab = 1.5,
+       cex.lab = 2,
        pch = 1, 
        col = cols["Total"],
        ylim = c( 0 , 2 ), 
        lty = 1, lwd = 1.5,
        main = "",
-       cex.axis = 1.5)
+       cex.axis = 2)
   lines(type = "b",
         y = maleRes[ 2, ],
         x = PQBcutoffs, 
