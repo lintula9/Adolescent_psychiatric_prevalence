@@ -206,10 +206,20 @@ anova(
   lm(BDIsum ~ PQBsum_cust, data = df[df$sex == "Female", ]),
   bestFemale)
 
-summary(bestOverall)
+summary(lm(BDIsum ~ PQBsum_cust, data = df))$r.squared - summary(bestOverall)$r.squared
+summary(lm(BDIsum ~ PQBsum_cust, data = df[df$sex == "Male", ]))$r.squared - summary(bestMale)$r.squared
+summary(lm(BDIsum ~ PQBsum_cust, data = df[df$sex == "Female", ]))$r.squared - summary(bestFemale)$r.squared
+
+summary(lm(BDIsum ~ PQBsum_cust, data = df))$r.squared 
+summary(lm(BDIsum ~ PQBsum_cust, data = df[df$sex == "Male", ]))$r.squared
+summary(lm(BDIsum ~ PQBsum_cust, data = df[df$sex == "Female", ]))$r.squared
+
+summary(lm(BDIsum ~ PQBsum_cust * factor(sex), data = df))
+
+
 
 # Calculate slopes: ------
-
+# Nah.
 
 # Test
 

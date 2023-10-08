@@ -1,6 +1,6 @@
 # CutOffs for dichotomized BDI -----
 
-PQBcutoffs <- 1:63 # Set cut-offs.
+PQBcutoffs <- 1:40 # Set cut-offs.
 
 # Mild depression ------
 mildCuts <- function() { lapply( PQBcutoffs, # Using all cases.
@@ -57,14 +57,14 @@ MDDCutsFemales <- function() { lapply(PQBcutoffs, # Females ony.
 # Find best cut-offs -------
 
 which.max(sapply(mildCuts(), FUN = function(x) x$estimate)) ; mildCuts()[[which.max(sapply(mildCuts(), FUN = function(x) x$estimate))]]
-which.max(sapply(MDDCuts(), FUN = function(x) x$estimate))
+which.max(sapply(MDDCuts(), FUN = function(x) x$estimate)) ; MDDCuts()[[which.max(sapply(MDDCuts(), FUN = function(x) x$estimate))]]
 
 
-which.max(sapply(mildCutsMales(), FUN = function(x) x$estimate))
-which.max(sapply(MDDCutsMales(), FUN = function(x) x$estimate))
+which.max(sapply(mildCutsMales(), FUN = function(x) x$estimate)) ; mildCutsMales()[[which.max(sapply(mildCutsMales(), FUN = function(x) x$estimate))]]
+which.max(sapply(MDDCutsMales(), FUN = function(x) x$estimate)) ; MDDCutsMales()[[which.max(sapply(MDDCutsMales(), FUN = function(x) x$estimate))]]
 
-which.max(sapply(mildCutsFemales(), FUN = function(x) x$estimate))
-which.max(sapply(MDDCutsFemales(), FUN = function(x) x$estimate))
+which.max(sapply(mildCutsFemales(), FUN = function(x) x$estimate)) ; mildCutsFemales()[[which.max(sapply(mildCutsFemales(), FUN = function(x) x$estimate))]]
+which.max(sapply(MDDCutsFemales(), FUN = function(x) x$estimate)) ; MDDCutsFemales()[[which.max(sapply(MDDCutsFemales(), FUN = function(x) x$estimate))]]
 
 if(FALSE) {
 plot(sapply(mildCuts(), FUN = function(x) x$p.value), col = cols["Total"])
