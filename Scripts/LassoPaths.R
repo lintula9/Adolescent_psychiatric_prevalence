@@ -21,7 +21,7 @@ BestLamda <- cv.glmnet(y = lassoRegDat$BDIsum, #Lassores.
                        x = as.matrix(x = lassoRegDat[,PQBvars]), 
                        type.measure = "mse", nfolds = nrow(lassoRegDat))
 bestLamdaIndex <- BestLamda$index[ 1 ]
-
+approximations <-approxfun(x = lassoRes$l1_norm,y = lassoRes$df, method = "constant", f = 1)
 
 if(FALSE){
 
@@ -60,7 +60,10 @@ cowplot::plot_grid(align = "hv", labels = "AUTO",
     scale_y_continuous(sec.axis = sec_axis( ~.*21, "Predictor variables included", 
                                             breaks = seq(1,21,2))) + 
     geom_line( aes(color = "Var. explained") , col = cols[ 2 ] ) +
-    geom_line( aes(color = "df", y = df/21 ), col = cols[ 3 ], lty = 2) +
+    geom_line(data = tibble(l1_norm = seq(0,max(lassoRes$l1_norm),.005),
+                            df = approximations(seq(0,max(lassoRes$l1_norm),.005))), 
+              inherit.aes = F, 
+              aes(x = l1_norm, color = "df", y = df/21 ), col = cols[ 3 ], lty = 2) +
     labs(y = "Variance explained", x = expression("L1 norm")) +
     theme(text=element_text(size=14,  family="serif")) +
     geom_vline( xintercept = lassoRes$l1_norm[ bestLamdaIndex ],
