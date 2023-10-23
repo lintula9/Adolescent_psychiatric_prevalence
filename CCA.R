@@ -19,11 +19,13 @@ if(F) {
 CCAResult <- CCA::rcc( ccd[ , PQBvars ], 
                        ccd[ , BDIvars ], 
                        lambda1 = ccaLambdas$lambda1 , lambda2 = ccaLambdas$lambda2 )
-if(F) {write.csv( x = do.call(cbind, list(CCAResult$xcoef[,1:3], 
+if(F) {
+  write.csv( x = do.call(cbind, list(CCAResult$xcoef[,1:3], 
                                           CCAResult$scores$corr.X.xscores[,1:3], 
                                           CCAResult$ycoef[,1:3],
                                           CCAResult$scores$corr.Y.xscores[,1:3])) , 
-           file = "CCAresult.csv" )} # Save Result as csv.
+           file = "CCAresult.csv" )
+  } # Save Result as csv.
 
 
 # Look if the most correlated structures in data are due to PQ-B 8, PQ-B 18?
