@@ -34,7 +34,7 @@ round(CCAResult$xcoef[,1:3], 2) # Regression coefficients.
 round(CCAResult$ycoef[,1:3], 2)
 CCAResult$scores$corr.X.xscores # Correlations to respective canoncical component.
 CCAResult$scores$corr.Y.xscores
-
+CCAResult$cor
 
 
 

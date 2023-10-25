@@ -1,22 +1,30 @@
 # Lasso paths
-lassoRegDat <- na.omit(df[,c("BDIsum", PQBvars)]) # Data for lassoregs.
+lassoRegDat <- na.omit(df[,c("BDIsum", PQBvars, "sex", "Age_in_years")]) # Data for lassoregs.
+lassoRegDat$sex <- as.numeric(lassoRegDat$sex) - 1
+nVars <- ncol(lassoRegDat)
+
 lassoRes <- glmnet(y = lassoRegDat$BDIsum, #Lassores.
-                   as.matrix(x = lassoRegDat[,PQBvars]), ) 
+                   as.matrix(x = lassoRegDat[,c(PQBvars, "sex", "Age_in_years")]), ) 
 lassoRes$l1_norm <- colSums(abs(lassoRes$beta))
+
+
 linesDf <- reshape2::melt(as.matrix(lassoRes$beta)) #figData
-linesDf$l1_norm <- rep(colSums(abs(lassoRes$beta)), each = 21) #figData
+linesDf$l1_norm <- rep( colSums(abs(lassoRes$beta)), each = nVars - 1 ) #fig Data
 linesDf$Var1 <- gsub(pattern = "PQB",replacement = "PQ-B ",x = linesDf$Var1)
-lastVals <- linesDf[(nrow(linesDf)-20):nrow(linesDf) , ]
+lastVals <- linesDf[(nrow(linesDf) - nVars + 2):nrow(linesDf) , ]
 lastVals$Rank <- order(lastVals$value)
 lastVals <- lastVals[ lastVals$Rank, ]
 linesDf <- merge(linesDf, lastVals[,c("Var1","Rank")], by = "Var1", all.y = T)
 linesDf <- linesDf[ order(linesDf$Rank), ]
+
 pqbcols <- c()
-pqbcols[ lastVals$Var1 ] <- rep(cols, times = 7)
+pqbcols[ lastVals$Var1 ] <- c(rep(cols, times = 7), NA, NA)
 names(pqbcols) <- lastVals$Var1
 pqbltys <- c()
-pqbltys[ lastVals$Var1 ] <- rep(c(1,2,3), times = 7)
+pqbltys[ lastVals$Var1 ] <- c(rep(c(1,2,3), times = 7), NA, NA)
 names(pqbltys) <- lastVals$Var1
+
+set.seed(1)
 BestLamda <- cv.glmnet(y = lassoRegDat$BDIsum, #Lassores.
                        x = as.matrix(x = lassoRegDat[,PQBvars]), 
                        type.measure = "mse", nfolds = nrow(lassoRegDat))
@@ -57,14 +65,14 @@ cowplot::plot_grid(align = "hv", labels = "AUTO",
                  dev.increment = lassoRes$dev.ratio / colSums(abs(lassoRes$beta))),
          aes( y = dev.ratio , x = l1_norm )) +
     scale_x_continuous(sec.axis = sec_axis( ~.*1, ""), minor_breaks = NULL) +
-    scale_y_continuous(sec.axis = sec_axis( ~.*21, "Predictor variables included", 
-                                            breaks = seq(1,21,2))) + 
+    scale_y_continuous(sec.axis = sec_axis( ~.*nVars, "Variables included", 
+                                            breaks = seq(1,nVars,2))) + 
     geom_line( aes(color = "Var. explained") , col = cols[ 2 ] ) +
     geom_line(data = tibble(l1_norm = seq(0,max(lassoRes$l1_norm),.005),
-                            df = approximations(seq(0,max(lassoRes$l1_norm),.005))), 
+                            df = approximations( seq( 0, max( lassoRes$l1_norm ), .005 ) ) ), 
               inherit.aes = F, 
-              aes(x = l1_norm, color = "df", y = df/21 ), col = cols[ 3 ], lty = 2) +
-    labs(y = "Variance explained", x = expression("L1 norm")) +
+              aes( x = l1_norm, color = "df", y = df / nVars ), col = cols[ 3 ], lty = 2 ) +
+    labs( y = "Variance explained", x = expression( "L1 norm" ) ) +
     theme(text=element_text(size=14,  family="serif")) +
     geom_vline( xintercept = lassoRes$l1_norm[ bestLamdaIndex ],
                 col = "darkgray"), 
@@ -86,20 +94,20 @@ cowplot::plot_grid(align = "hv", labels = "AUTO",
 #        height = 8, width = 8, res = 480, 
 #      units = "in", family = "serif") 
 
-  ggplot( linesDf, 
+  ggplot( linesDf[ !(linesDf$Var1 %in% c("sex", "Age_in_years")), ], # sex is omitted from this plot.
           aes( y = value, color = Var1, x = l1_norm )) +
     geom_line( ) +
     labs(y = "Coefficient", x = "L1 norm") + 
-    coord_cartesian(ylim = c(-1.5,1.5), xlim = c(0, 14)) +
+    coord_cartesian(ylim = c(-1.5,1.5), xlim = c(0, 20)) +
     scale_y_continuous(sec.axis = sec_axis( ~.*1, "")) +
-    scale_x_continuous(sec.axis = sec_axis( ~.*1, "", breaks = seq(0,12,4)), breaks = seq(0,12,4), minor_breaks = NULL) +
+    scale_x_continuous(sec.axis = sec_axis( ~.*1, "", breaks = seq(0,18,4)), breaks = seq(0,18,4), minor_breaks = NULL) +
     scale_color_manual( values = pqbcols ) +
     scale_linetype_manual( values = pqbltys ) +
     annotate("segment", x = 0, y = 0, xend = max(linesDf$l1_norm), yend = 0) + 
     theme(text=element_text(size=14,  family="serif")) +
-    geom_text_repel(data = lastVals, 
+    geom_text_repel(data = lastVals[ !(lastVals$Var1 %in% c("sex", "Age_in_years")), ], # Sex is omitted from this plot. 
                      aes(label = Var1), 
-                     nudge_x = 1, color = pqbcols,
+                     nudge_x = 1, color = pqbcols[-which(names(pqbcols) %in% c("sex", "Age_in_years"))],
                      segment.linetype = 3, direction = "y", hjust=0) + 
     geom_vline( xintercept = lassoRes$l1_norm[ bestLamdaIndex ],  
                 col = "darkgray") + 
@@ -108,10 +116,9 @@ cowplot::plot_grid(align = "hv", labels = "AUTO",
  
 )#GridEnd.
 
-dev.off(); #PDF end
+dev.off(); #TIFF end
 
-(apply(as.matrix(t(lassoRes$beta)), FUN = function(x) sum(x == 0), MARGIN = 2)
-)
+
 
 }
 if(FALSE){
