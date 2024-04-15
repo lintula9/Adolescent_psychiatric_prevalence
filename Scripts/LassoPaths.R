@@ -13,7 +13,7 @@ linesDf$l1_norm <- rep( colSums(abs(lassoRes$beta)), each = nVars - 1 ) #fig Dat
 linesDf$Var1 <- gsub(pattern = "PQB",replacement = "PQ-B ",x = linesDf$Var1)
 lastVals <- linesDf[(nrow(linesDf) - nVars + 2):nrow(linesDf) , ]
 lastVals$Rank <- order(lastVals$value)
-lastVals <- lastVals[ lastVals$Rank, ]
+lastVals <- lastVals[ order(lastVals$Rank), ]
 linesDf <- merge(linesDf, lastVals[,c("Var1","Rank")], by = "Var1", all.y = T)
 linesDf <- linesDf[ order(linesDf$Rank), ]
 

@@ -4,7 +4,7 @@ package_names <- c("haven", "ggplot2", "lavaan", "brunnermunzel", "mgcv",
                    "splines", "rlang", "psych", "glmnet", "foreign", 
                    "viridis", "RColorBrewer", "cowplot", "ggrepel",
                    "lavaan", "bayestestR", "scales", "mlr3measures",
-                   "mice", "ProDenICA", "CCA", "tidyr")
+                   "mice", "ProDenICA", "CCA", "tidyr", "plyr")
 
 for (i in package_names){
   if ( !requireNamespace( i, 
@@ -23,8 +23,8 @@ names(cols) <- c("Total", "Male", "Female")
 theme_set(theme_bw())
 options(ggplot2.discrete.colour= cols)
 par(family = "serif")
-pqbItems <- read_lines("C:/Users/lintu/OneDrive/Desktop/PTO tutkimus/PQ-B_items.txt")
-bdiItems <- read_lines("C:/Users/lintu/OneDrive/Desktop/PTO tutkimus/BDI_items.txt")
+pqbItems <- readLines("C:/Users/lintu/OneDrive/Desktop/PTO tutkimus/PQ-B_items.txt")
+bdiItems <- readLines("C:/Users/lintu/OneDrive/Desktop/PTO tutkimus/BDI_items.txt")
 
 # Data modifications -------------
 
@@ -37,3 +37,4 @@ df$sex <- factor(df$Gender_Male1_Female2, levels = c(1,2), labels = c("Male", "F
 
 #missing pattern
 if(FALSE){md.pattern(df[,c(paste("PQB",1:21, sep = ""))])}
+
