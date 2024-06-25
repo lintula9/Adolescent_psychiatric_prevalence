@@ -38,3 +38,36 @@ df$sex <- factor(df$Gender_Male1_Female2, levels = c(1,2), labels = c("Male", "F
 #missing pattern
 if(FALSE){md.pattern(df[,c(paste("PQB",1:21, sep = ""))])}
 
+# Reliability for PQ-B and BDI
+if(FALSE){
+  # Cronbach's alpha for PQ-B
+  psych::alpha(df[,PQBvars_cust], check.keys = T)
+  # Cronbach's alpha for BDI
+  psych::alpha(df[,BDIvars], check.keys = T)
+}
+
+# Counts for cuto-offs.
+if(FALSE){
+  table(df$PQBdicsum >= 3)
+  table(df$PQBdicsum >= 7)
+  table(df$PQBsum_cust >= 24)
+  
+  table(df[df$Gender_Male1_Female2 == 1,]$PQBdicsum >= 3)
+  table(df[df$Gender_Male1_Female2 == 1,]$PQBdicsum >= 7)
+  table(df[df$Gender_Male1_Female2 == 1,]$PQBsum_cust >= 24)
+  
+  table(df[df$Gender_Male1_Female2 == 2,]$PQBdicsum >= 3)
+  table(df[df$Gender_Male1_Female2 == 2,]$PQBdicsum >= 7)
+  table(df[df$Gender_Male1_Female2 == 2,]$PQBsum_cust >= 24)
+  
+  table(df$BDIsum >= 10)
+  table(df$BDIsum >= 16)
+
+  table(df[df$Gender_Male1_Female2 == 1,]$BDIsum >= 10)
+  table(df[df$Gender_Male1_Female2 == 1,]$BDIsum >= 16)
+
+  table(df[df$Gender_Male1_Female2 == 2,]$BDIsum >= 10)
+  table(df[df$Gender_Male1_Female2 == 2,]$BDIsum >= 16)
+
+  
+}
