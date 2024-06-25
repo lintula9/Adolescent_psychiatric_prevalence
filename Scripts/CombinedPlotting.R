@@ -26,6 +26,10 @@ title(main = "A", cex.main = 2)
 cohenPlotCombined()
 title(main = "B", cex.main = 2)
 par(cex.main = 2,mar = c(5.1,4.1,4.1,2.1)) # Reset marginal settings.
+
+# Add bootstrapped confidence intervals to plot A.
+
+
 dev.off()
 
 # # #

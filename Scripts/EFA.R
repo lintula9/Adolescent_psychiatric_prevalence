@@ -6,9 +6,7 @@ with(efaRes, {
   loadings[ loadings < .3] <- 0
   print(loadings)
   print(fitMeasures(efaRes, fit.measures = c("SRMR","SRMR.scaled","CFI.scaled", "RMSEA.scaled")))
-  
-  
-})
+  })
 
 efaRes21 <- efa(df[ , BDIvars], ordered = T, nfactors = 1, rotation = "oblimin")
 efaRes22 <- efa(df[ , BDIvars], ordered = T, nfactors = 2, rotation = "oblimin")
