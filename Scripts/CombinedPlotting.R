@@ -52,7 +52,7 @@ mars <- par()$mar
 
 tiff(units = "in", # 2: Superiority for Mild depression
      width = 16, height = 9, 
-     filename = "Figures/Publication_Superiority_2_MildAndMDD.tiff", 
+     filename = "Figures/Publication_Superiority_S2_MildAndMDD.tiff", 
      res = 640, pointsize = 12, family = "serif")
 par(cex.main = 2,mfrow = c(1,2), mar = c(5.1,5.1,5.1,2.1))
 superiority_plots_mildDepression( )
