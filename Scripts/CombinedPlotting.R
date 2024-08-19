@@ -49,18 +49,21 @@ dev.off( )
 # Supplementary:
 {
 mars <- par()$mar
+par(cex.main = 2,mar = mars, mfrow = c(1,1))
 
 tiff(units = "in", # 2: Superiority for Mild depression
      width = 16, height = 9, 
-     filename = "Figures/Publication_Superiority_S2_MildAndMDD.tiff", 
+     filename = "Figures/Publication_Superiority_S2_Mild.tiff", 
      res = 640, pointsize = 12, family = "serif")
-par(cex.main = 2,mfrow = c(1,2), mar = c(5.1,5.1,5.1,2.1))
 superiority_plots_mildDepression( )
-title(main = "A")
+dev.off()
+
+tiff(units = "in", # 2: Superiority for Mild depression
+     width = 16, height = 9, 
+     filename = "Figures/Publication_Superiority_S3_MDD.tiff", 
+     res = 640, pointsize = 12, family = "serif")
 superiority_plots_MDD( )
-title(main = "B")
 dev.off( )
-par(cex.main = 2,mar = mars, mfrow = c(1,1))
 }
 tiff(units = "in", # S1: Superiority CI plot
      width = 8, height = 12, 
